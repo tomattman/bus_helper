@@ -28,18 +28,28 @@ data = {
 	'tr': {}
 }
 
-for num in range(51):  # 51
-	driver.get(settings.bus_url.format(num + 1))
-	driver.execute_script(jquery)
+bus_nums = [x + 1 for x in range(51)]
+tr_nums = [x + 1 for x in range(20)]
 
+for num in bus_nums:
+	driver.get(settings.bus_url.format(num))
+	driver.execute_script(jquery)
 	bus_data = driver.execute_script(script)
 	if bus_data:
-		data['bus'][str(num + 1)] = bus_data
+		for bus in bus_data:
+			bus['href'] = settings.bus_url.format(num)
+		data['bus'][str(num)] = bus_data
 
-for num in range(20):  # 20
-	driver.get(settings.tr_url.format(num + 1))
+for num in tr_nums:
+	driver.get(settings.tr_url.format(num))
 	driver.execute_script(jquery)
-	data['tr'][str(num + 1)] = driver.execute_script(script)
+	bus_data = driver.execute_script(script)
+
+	for bus in bus_data:
+		bus['href'] = settings.bus_url.format(num)
+
+	data['tr'][str(num)] = bus_data
 
 json_file = open(settings.routes_file, 'w', encoding = "utf-8")
 json.dump(data, json_file, ensure_ascii = False)
+driver.close()
