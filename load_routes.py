@@ -28,8 +28,10 @@ data = {
 	'tr': {}
 }
 
-bus_nums = [x + 1 for x in range(51)]
-tr_nums = [x + 1 for x in range(20)]
+#bus_nums = [x + 1 for x in range(51)]
+bus_nums = [1, 2, 3]
+#tr_nums = [x + 1 for x in range(20)]
+tr_nums = []
 
 for num in bus_nums:
 	driver.get(settings.bus_url.format(num))
@@ -50,6 +52,6 @@ for num in tr_nums:
 
 	data['tr'][str(num)] = bus_data
 
-json_file = open(settings.routes_file, 'w', encoding = "utf-8")
+json_file = open(settings.routes_start_file, 'w', encoding = "utf-8")
 json.dump(data, json_file, ensure_ascii = False)
 driver.close()

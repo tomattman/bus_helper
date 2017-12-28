@@ -40,6 +40,6 @@ for href in hrefs:
 	else:
 		print(href)
 
-json_file = open(settings.stations_file, 'w', encoding = "utf-8")
+json_file = open(settings.stations_start_file, 'w', encoding = "utf-8")
 json.dump(data, json_file, ensure_ascii = False)
 driver.close()
